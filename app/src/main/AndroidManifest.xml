@@ -19,9 +19,6 @@
         </activity>
         <activity android:name=".DeviceListActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog">
-            <intent-filter>
-
-            </intent-filter>
         </activity>
     </application>
 
