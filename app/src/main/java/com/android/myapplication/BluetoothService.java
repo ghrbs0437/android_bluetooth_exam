@@ -29,7 +29,7 @@ public class BluetoothService extends Service {
     public static final int STATE_FAIL = 7;
 
     private int mState;
-
+    public int mMode ;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
 
@@ -323,15 +323,22 @@ public class BluetoothService extends Service {
          * Write to the connected OutStream.
          * @param buffer The bytes to write
          */
-        public void write(byte[] buffer) {
+        // synchronized write
+        public synchronized void write( byte[] buffer, int mode ) {
             try {
-// 값을 쓰는 부분(값을 보낸다)
-                mmOutStream.write(buffer);
+                mmOutStream.write(buffer) ;
+                mMode = mode ;
+
+                if ( mode == MainActivity.MODE_REQUEST ) { //main에서 MODE_REQUEST모드일 때 다음 메시지를 보냄.
+// Share the sent message back to the UI Activity
+                    mHandler.obtainMessage(MainActivity.MESSAGE_WRITE, -1, -1, buffer).sendToTarget(); //버퍼(burrer)에담은 메시지를 보내는 부분.
+                }
 
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
             }
         }
+
 
         public void cancel() {
             try {
@@ -342,14 +349,18 @@ public class BluetoothService extends Service {
         }
     }
     /* write() : 값을 쓰는 부분(보내는 부분) */
-    public void write(byte[] out) { // Create temporary object
-        ConnectedThread r; // Synchronize a copy of the ConnectedThread
-        synchronized (this) {
-            if (mState != STATE_CONNECTED)
-                return;
-            r = mConnectedThread;
-        } // Perform the write unsynchronized r.write(out); }
+    public void write( byte[] out,int mode ) {
+// ConnectedThread 객체 생성
+        ConnectedThread r ;
+
+        synchronized ( this ) {
+            if ( mState != STATE_CONNECTED ) return ; //블루투스에 연결되는 상태일 때는 값을 쓰지 않는다.
+            r = mConnectedThread ; //그렇지 않으면 쓰레드를 보내는 ConnectedThread클래스 객체 생성.
+        }
+
+        r.write(out, mode) ; // ConnectedThread클래스 내에 있는 write함수를 호출하여 메시지를 보낸다.
     }
+
 
     /* connectionFailed() : 연결 실패했을때 */
     private void connectionFailed() {

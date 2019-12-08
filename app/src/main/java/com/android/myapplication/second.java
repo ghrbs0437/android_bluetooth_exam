@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class second extends AppCompatActivity {
 
     private static final String TAG = "MAIN";
     private static final boolean D = true;
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int MESSAGE_WRITE=2;
 
 
+    private MainActivity mactivity;
 
 
     private Button btn_Connect;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mbtn1;
     private Button mbtn2;
 
-    private static BluetoothService bluetoothService_obj = null;
+    public BluetoothService bluetoothService_obj = null;
     private StringBuffer mOutStringBuffer;
 
     private final Handler mHandler = new Handler() {
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
         mSelectedBtn=-1;
 
+
+
         btn_Connect = (Button) findViewById((R.id.bluetooth_connect));
         btn_Connect.setOnClickListener(mClickListener);
 
@@ -104,8 +107,10 @@ public class MainActivity extends AppCompatActivity {
         mbtn1.setOnClickListener(mClickListener);
         mbtn2=(Button)findViewById(R.id.btn2);
         mbtn2.setOnClickListener(mClickListener);
+
+
         if (bluetoothService_obj == null) {
-            bluetoothService_obj = new BluetoothService(this, mHandler);
+            bluetoothService_obj= MainActivity.getbluetoothservice();
             mOutStringBuffer= new StringBuffer("");
         }
 
@@ -126,13 +131,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn1 :
 
                     if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){ //연결된 상태에서만 값을 보낸다.
-                        sendMessage("0", MODE_REQUEST);
+                      sendMessage("0", MODE_REQUEST);
                         mSelectedBtn = 1;
                     }else {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                     }
 
-                    break ;
+                   break ;
 
                 case R.id.btn2 :
 
@@ -143,11 +148,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                     }
                     break ;
-                case R.id.newACT:
-                    Toast.makeText(getApplicationContext(), "눌리긴하나 ", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),second.class);
-                    startActivity(intent);
-                    break;
                 default:
                     break;
             }//switch
@@ -209,10 +209,6 @@ public class MainActivity extends AppCompatActivity {
 
         mSendingState = STATE_NO_SENDING ;
         notify() ;
-    }
-
-    public static BluetoothService getbluetoothservice(){
-        return bluetoothService_obj;
     }
 
 }
