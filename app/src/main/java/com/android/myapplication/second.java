@@ -34,8 +34,6 @@ public class second extends AppCompatActivity {
     private MainActivity mactivity;
 
 
-    private Button btn_Connect;
-    private Button btn_newact;
     private Button mbtn1;
     private Button mbtn2;
 
@@ -91,17 +89,10 @@ public class second extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
         mSelectedBtn=-1;
 
-
-
-        btn_Connect = (Button) findViewById((R.id.bluetooth_connect));
-        btn_Connect.setOnClickListener(mClickListener);
-
-        btn_newact = (Button)findViewById(R.id.newACT);
-        btn_newact.setOnClickListener(mClickListener);
 
         mbtn1=(Button)findViewById(R.id.btn1);
         mbtn1.setOnClickListener(mClickListener);
