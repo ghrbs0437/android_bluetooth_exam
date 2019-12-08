@@ -2,24 +2,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical"
-    >
+    tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
 
-    <Button
-        android:id="@+id/btn1"
-        android:text="1"
-        android:textColor="#FFFFFF"
-        android:layout_width="160dp"
-        android:layout_height="160dp" />
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"></Button>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btn2"
-        android:text="2"
-        android:textColor="#FFFFFF"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="250dp"
+            android:layout_height="160dp"
+            android:text="1"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="250dp"
+            android:layout_height="160dp"
+            android:text="2"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="160dp"></Button>
+    </LinearLayout>
 </LinearLayout>

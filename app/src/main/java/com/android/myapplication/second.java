@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -85,6 +88,44 @@ public class second extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
+        MenuInflater mInflater  = getMenuInflater();
+        mInflater.inflate(R.menu.menu1,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.set_small:
+                if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
+                    sendMessage( "3", MODE_REQUEST ) ;
+                }else {
+                    Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            case R.id.set_midium:
+                if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
+                    sendMessage( "4", MODE_REQUEST ) ;
+                }else {
+                    Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+            case R.id.set_big:
+                if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
+                    sendMessage( "5", MODE_REQUEST ) ;
+                }else {
+                    Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+        }
+        return false;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
