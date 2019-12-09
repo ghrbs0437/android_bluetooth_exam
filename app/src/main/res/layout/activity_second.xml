@@ -3,8 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/setting"
+        android:scaleType="fitCenter"
+        android:background="#FFFFFF"
+        android:id="@+id/setting"
+        android:layout_gravity="right"></ImageButton>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,61 +26,69 @@
             android:layout_width="250dp"
             android:layout_height="160dp"
             android:text="ON"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="50dp" />
 
         <Button
             android:id="@+id/btn2"
             android:layout_width="250dp"
             android:layout_height="160dp"
             android:text="OFF"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="50dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp">
+        android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn3"
             android:layout_width="250dp"
             android:layout_height="160dp"
-            android:id="@+id/btn3"
+            android:text="타이머 Set"
             android:textColor="#FFFFFF"
-            android:text="타이머 전송">
-        </Button>
+            android:textSize="40dp"></Button>
 
         <RadioGroup
+            android:id="@+id/rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:id="@+id/rg">
+            android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radio_on"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="on"
-                android:id="@+id/radio_on">
+                android:layout_marginRight="50dp"
+                android:text="On"
+                android:textSize="30dp">
 
             </RadioButton>
 
             <RadioButton
+                android:id="@+id/radio_off"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="off"
-                android:id="@+id/radio_off">
+                android:text="Off"
+                android:textSize="30dp">
 
             </RadioButton>
         </RadioGroup>
 
         <EditText
+            android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="타이머 설정"
-            android:id="@+id/timer"></EditText>
+            android:hint="시간 입력(초)"
+            android:textAlignment="center"
+            android:minEms="6"
+            android:textSize="20dp"></EditText>
     </LinearLayout>
 
 </LinearLayout>
