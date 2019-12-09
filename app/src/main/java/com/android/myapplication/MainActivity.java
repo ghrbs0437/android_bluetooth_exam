@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
 
-    private int mSelectedBtn;
     private  static final int STATE_SENDING=1;
     private static final int STATE_NO_SENDING=2;
     private int mSendingState;
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSelectedBtn=-1;
 
         btn_Connect = (Button) findViewById((R.id.bluetooth_connect));
         btn_Connect.setOnClickListener(mClickListener);
@@ -133,40 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-    }
-
-    /*메시지를 보낼 메소드 정의*/
-    private synchronized void sendMessage( String message, int mode ) {
-
-        if ( mSendingState == STATE_SENDING ) {
-            try {
-                wait() ;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        mSendingState = STATE_SENDING ;
-
-// Check that we're actually connected before trying anything
-        if ( bluetoothService_obj.getState() != BluetoothService.STATE_CONNECTED ) {
-            mSendingState = STATE_NO_SENDING ;
-            return ;
-        }
-
-// Check that there's actually something to send
-        if ( message.length() > 0 ) {
-// Get the message bytes and tell the BluetoothChatService to write
-            byte[] send = message.getBytes() ;
-            bluetoothService_obj.write(send, mode) ;
-
-// Reset out string buffer to zero and clear the edit text field
-            mOutStringBuffer.setLength(0) ;
-
-        }
-
-        mSendingState = STATE_NO_SENDING ;
-        notify() ;
     }
 
     public static BluetoothService getbluetoothservice(){

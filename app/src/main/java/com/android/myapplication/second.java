@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -33,7 +32,6 @@ public class second extends AppCompatActivity {
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
 
-    private int mSelectedBtn;
     private static final int STATE_SENDING = 1;
     private static final int STATE_NO_SENDING = 2;
     private int mSendingState;
@@ -60,52 +58,6 @@ public class second extends AppCompatActivity {
 
     public BluetoothService bluetoothService_obj = null;
     private StringBuffer mOutStringBuffer;
-
-    private final Handler mHandler = new Handler() {
-        //핸들러의 기능을 수행할 클래스(handleMessage)
-        public void handleMessage(Message msg) {
-            //BluetoothService로부터 메시지(msg)를 받는다.
-            super.handleMessage(msg);
-
-            switch (msg.what) {
-
-                case MESSAGE_STATE_CHANGE:
-                    if (D) Log.i(TAG, "MESSAGE_STATE_CHANGE:" + msg.arg1);
-
-                    switch (msg.arg1) {
-
-                        case BluetoothService.STATE_CONNECTED:
-                            Toast.makeText(getApplicationContext(), "블루투스 연결에 성공하였습니다!", Toast.LENGTH_SHORT).show();
-                            break;
-                        case BluetoothService.STATE_FAIL:
-                            Toast.makeText(getApplicationContext(), "블루투스 연결에 실패하였습니다..", Toast.LENGTH_SHORT).show();
-
-                            /**/
-                        case MESSAGE_WRITE:
-                            String writeMessage = null;
-
-                            if (mSelectedBtn == 1) {
-                                writeMessage = mbtn1.getText().toString();
-                                mSelectedBtn = -1;
-                            } else if (mSelectedBtn == 2) {
-                                writeMessage = mbtn2.getText().toString();
-                                mSelectedBtn = -1;
-                            } else { // mSelectedBtn = -1 : not selected
-
-                                byte[] writeBuf = (byte[]) msg.obj;
-// construct a string from the buffer
-                                writeMessage = new String(writeBuf);
-                            }
-
-                            break;
-                    }
-
-
-            }
-
-
-        }
-    };
 
 
     @Override
@@ -146,7 +98,6 @@ public class second extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        mSelectedBtn = -1;
 
 
         mbtn1 = (Button) findViewById(R.id.btn1);
@@ -175,7 +126,6 @@ public class second extends AppCompatActivity {
 
                     if (bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED) { //연결된 상태에서만 값을 보낸다.
                         sendMessage("0" + Integer.toString(msize), MODE_REQUEST);
-                        mSelectedBtn = 1;
                     } else {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                     }
@@ -184,7 +134,6 @@ public class second extends AppCompatActivity {
 
                     if (bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED) {
                         sendMessage("1" + Integer.toString(msize), MODE_REQUEST);
-                        mSelectedBtn = 2;
                     } else {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                     }
@@ -206,8 +155,6 @@ public class second extends AppCompatActivity {
                             mtimer = (editText.getText().toString());
                             sendMessage(Integer.toString(mswitch) + Integer.toString(msize) + mtimer, MODE_REQUEST);
                         }
-
-                        mSelectedBtn = 3;
                     } else {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                     }
@@ -224,8 +171,7 @@ public class second extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), msize, Toast.LENGTH_SHORT).show();
                                         sendMessage("2" + Integer.toString(msize), MODE_REQUEST);
                                     } else {
-
-                                        Toast.makeText(getApplicationContext(), "2" + Integer.toString(msize), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
