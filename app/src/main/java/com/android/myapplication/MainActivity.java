@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.newACT:
-                    Toast.makeText(getApplicationContext(), "눌리긴하나 ", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),second.class);
                     startActivity(intent);
                     break;

@@ -16,14 +16,14 @@
             android:id="@+id/btn1"
             android:layout_width="250dp"
             android:layout_height="160dp"
-            android:text="1"
+            android:text="ON"
             android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btn2"
             android:layout_width="250dp"
             android:layout_height="160dp"
-            android:text="2"
+            android:text="OFF"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
@@ -37,7 +37,9 @@
         <Button
             android:layout_width="250dp"
             android:layout_height="160dp"
-            android:id="@+id/btn3">
+            android:id="@+id/btn3"
+            android:textColor="#FFFFFF"
+            android:text="타이머 전송">
         </Button>
 
         <RadioGroup
@@ -68,7 +70,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="hello"
+            android:hint="타이머 설정"
             android:id="@+id/timer"></EditText>
     </LinearLayout>
 
