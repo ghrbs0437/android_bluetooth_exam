@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btn_Connect;
     private Button btn_newact;
-    private Button mbtn1;
-    private Button mbtn2;
 
     private static BluetoothService bluetoothService_obj = null;
     private StringBuffer mOutStringBuffer;
@@ -61,23 +59,6 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),"블루투스 연결에 실패하였습니다..",Toast.LENGTH_SHORT).show();
 
                             /**/
-                        case MESSAGE_WRITE :
-                            String writeMessage = null ;
-
-                            if ( mSelectedBtn == 1 ) {
-                                writeMessage = mbtn1.getText().toString() ;
-                                mSelectedBtn = -1 ;
-                            } else if ( mSelectedBtn == 2 ) {
-                                writeMessage = mbtn2.getText().toString() ;
-                                mSelectedBtn = -1 ;
-                            } else { // mSelectedBtn = -1 : not selected
-
-                                byte[] writeBuf = (byte[]) msg.obj;
-// construct a string from the buffer
-                                writeMessage = new String(writeBuf);
-                            }
-
-                            break;
                     }
 
 
@@ -100,11 +81,7 @@ public class MainActivity extends AppCompatActivity {
         btn_newact = (Button)findViewById(R.id.newACT);
         btn_newact.setOnClickListener(mClickListener);
 
-        mbtn1=(Button)findViewById(R.id.btn1);
-        mbtn1.setOnClickListener(mClickListener);
-        mbtn2=(Button)findViewById(R.id.btn2);
-        mbtn2.setOnClickListener(mClickListener);
-        if (bluetoothService_obj == null) {
+            if (bluetoothService_obj == null) {
             bluetoothService_obj = new BluetoothService(this, mHandler);
             mOutStringBuffer= new StringBuffer("");
         }
@@ -123,26 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                     break;
-                case R.id.btn1 :
 
-                    if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){ //연결된 상태에서만 값을 보낸다.
-                        sendMessage("0", MODE_REQUEST);
-                        mSelectedBtn = 1;
-                    }else {
-                        Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
-                    }
-
-                    break ;
-
-                case R.id.btn2 :
-
-                    if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
-                        sendMessage( "1", MODE_REQUEST ) ;
-                        mSelectedBtn = 2 ;
-                    }else {
-                        Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
-                    }
-                    break ;
                 case R.id.newACT:
                     Toast.makeText(getApplicationContext(), "눌리긴하나 ", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),second.class);
