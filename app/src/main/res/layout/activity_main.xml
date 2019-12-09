@@ -18,7 +18,7 @@
         android:layout_height="60dp"
 
         android:text = "블루투스 활성화"
-  />
+        />
     <Button
         android:id="@+id/newACT"
         android:layout_width="200dp"

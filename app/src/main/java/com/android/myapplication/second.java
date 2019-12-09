@@ -13,6 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class second extends AppCompatActivity {
@@ -39,6 +42,15 @@ public class second extends AppCompatActivity {
 
     private Button mbtn1;
     private Button mbtn2;
+    private Button mbtn3;
+
+    private RadioGroup Rg;
+    private EditText editText;
+
+
+    private String mtimer="";
+    private int mswitch=0;
+    private int msize=0;
 
     public BluetoothService bluetoothService_obj = null;
     private StringBuffer mOutStringBuffer;
@@ -102,14 +114,16 @@ public class second extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.set_small:
                 if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
-                    sendMessage( "3", MODE_REQUEST ) ;
+                    msize=0;
+                    sendMessage( "2"+Integer.toString(msize), MODE_REQUEST ) ;
                 }else {
                     Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.set_midium:
                 if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
-                    sendMessage( "4", MODE_REQUEST ) ;
+                    msize=1;
+                    sendMessage( "2"+Integer.toString(msize), MODE_REQUEST ) ;
                 }else {
                     Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                 }
@@ -117,7 +131,8 @@ public class second extends AppCompatActivity {
                 return true;
             case R.id.set_big:
                 if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
-                    sendMessage( "5", MODE_REQUEST ) ;
+                    msize=2;
+                    sendMessage( "2"+Integer.toString(msize), MODE_REQUEST ) ;
                 }else {
                     Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                 }
@@ -139,7 +154,10 @@ public class second extends AppCompatActivity {
         mbtn1.setOnClickListener(mClickListener);
         mbtn2=(Button)findViewById(R.id.btn2);
         mbtn2.setOnClickListener(mClickListener);
-
+        mbtn3=(Button)findViewById(R.id.btn3);
+        mbtn3.setOnClickListener(mClickListener);
+        Rg=(RadioGroup)findViewById(R.id.rg);
+        editText = (EditText)findViewById(R.id.timer);
 
         if (bluetoothService_obj == null) {
             bluetoothService_obj= MainActivity.getbluetoothservice();
@@ -163,19 +181,45 @@ public class second extends AppCompatActivity {
                 case R.id.btn1 :
 
                     if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){ //연결된 상태에서만 값을 보낸다.
-                      sendMessage("0", MODE_REQUEST);
+                        sendMessage("0"+Integer.toString(msize), MODE_REQUEST);
                         mSelectedBtn = 1;
                     }else {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                     }
 
-                   break ;
+                    break ;
 
                 case R.id.btn2 :
 
                     if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
-                        sendMessage( "1", MODE_REQUEST ) ;
+                        sendMessage( "1"+Integer.toString(msize), MODE_REQUEST ) ;
                         mSelectedBtn = 2 ;
+                    }else {
+                        Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
+                    }
+                    break ;
+
+                case R.id.btn3 :
+
+                    if( bluetoothService_obj.getState() == BluetoothService.STATE_CONNECTED){
+                        if( editText.getText().toString().length()==0 || editText.getText().toString()=="0")
+                        {
+                            break;
+                        }else{
+                            RadioButton rd = (RadioButton) findViewById(Rg.getCheckedRadioButtonId());
+                            switch (rd.getId()){
+                                case R.id.radio_on:
+                                    mswitch=0;
+                                    break;
+                                case R.id.radio_off:
+                                    mswitch=1;
+                                    break;
+                            }
+                            mtimer=(editText.getText().toString());
+                            sendMessage(Integer.toString(mswitch)+Integer.toString(msize)+mtimer, MODE_REQUEST ) ;
+                        }
+
+                        mSelectedBtn = 3 ;
                     }else {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 먼저 해 주세요!! ", Toast.LENGTH_SHORT).show();
                     }

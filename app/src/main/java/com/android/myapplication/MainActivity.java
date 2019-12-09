@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         btn_newact = (Button)findViewById(R.id.newACT);
         btn_newact.setOnClickListener(mClickListener);
 
-            if (bluetoothService_obj == null) {
+        if (bluetoothService_obj == null) {
             bluetoothService_obj = new BluetoothService(this, mHandler);
             mOutStringBuffer= new StringBuffer("");
         }
